@@ -1,29 +1,30 @@
-package ch4;
+package ch4.refactor;
 
 public class SieveOfEratosthenes implements PrimeGenerator {
 
     public static final int MINIMUM_PRIME_VALUE = 2;
 
-    boolean[] sieve;
+    private int size;
+    private boolean[] sieve;
 
     public int[] generatePrimes(int maxValue) {
         if (!isValidValue(maxValue)) {
             return new int[0];
         }
 
-        int size = maxValue + 1;
-        sieve = initSieve(size);
+        size = maxValue + 1;
+        sieve = initSieve();
 
-        filterSieve(size);
+        filterSieve();
 
-        return findPrimes(size);
+        return findPrimes();
     }
 
     private boolean isValidValue(int maxValue) {
         return maxValue >= MINIMUM_PRIME_VALUE;
     }
 
-    private boolean[] initSieve(int size) {
+    private boolean[] initSieve() {
         boolean[] sieve = new boolean[size];
 
         for (int i = 0; i < size; i++) {
@@ -33,8 +34,8 @@ public class SieveOfEratosthenes implements PrimeGenerator {
         return sieve;
     }
 
-    private int[] findPrimes(int size) {
-        int[] primes = initPrimes(size);
+    private int[] findPrimes() {
+        int[] primes = initPrimes();
 
         for (int i = 0, j = 0; i < size; i++) {
             if (isPrimeNum(sieve[i])) {
@@ -44,25 +45,25 @@ public class SieveOfEratosthenes implements PrimeGenerator {
         return primes;
     }
 
-    private void filterSieve(int size) {
-        for (int i = MINIMUM_PRIME_VALUE; i < iterLimit(size); i++) {
+    private void filterSieve() {
+        for (int i = MINIMUM_PRIME_VALUE; i < iterLimit(); i++) {
             if (isPrimeNum(sieve[i])) {
-                setFalseToMultipleOfPrime(size, i);
+                setFalseToMultipleOfPrime(i);
             }
         }
     }
 
-    private int iterLimit(int size) {
+    private int iterLimit() {
         return (int) Math.sqrt(size) + 1;
     }
 
-    private int[] initPrimes(int size) {
-        int count = countPrimes(size);
+    private int[] initPrimes() {
+        int count = countPrimes();
 
         return new int[count];
     }
 
-    private int countPrimes(int size) {
+    private int countPrimes() {
         int count = 0;
 
         for (int i = 0; i < size; i++) {
@@ -73,7 +74,7 @@ public class SieveOfEratosthenes implements PrimeGenerator {
         return count;
     }
 
-    private void setFalseToMultipleOfPrime(int size, int i) {
+    private void setFalseToMultipleOfPrime(int i) {
         for (int j = MINIMUM_PRIME_VALUE * i; j < size; j += i) {
             sieve[j] = false;
         }
