@@ -27,11 +27,18 @@ public class SieveOfEratosthenes implements PrimeGenerator {
     private boolean[] initSieve() {
         boolean[] sieve = new boolean[size];
 
-        for (int i = 0; i < size; i++) {
+        for (int i = MINIMUM_PRIME_VALUE; i < size; i++) {
             sieve[i] = true;
         }
-        sieve[0] = sieve[1] = false;
         return sieve;
+    }
+
+    private void filterSieve() {
+        for (int i = MINIMUM_PRIME_VALUE; i < iterLimit(); i++) {
+            if (isPrimeNum(sieve[i])) {
+                filterMultipleOfPrime(i);
+            }
+        }
     }
 
     private int[] findPrimes() {
@@ -45,16 +52,14 @@ public class SieveOfEratosthenes implements PrimeGenerator {
         return primes;
     }
 
-    private void filterSieve() {
-        for (int i = MINIMUM_PRIME_VALUE; i < iterLimit(); i++) {
-            if (isPrimeNum(sieve[i])) {
-                setFalseToMultipleOfPrime(i);
-            }
-        }
-    }
-
     private int iterLimit() {
         return (int) Math.sqrt(size) + 1;
+    }
+
+    private void filterMultipleOfPrime(int primeNum) {
+        for (int multipleNum = MINIMUM_PRIME_VALUE * primeNum; multipleNum < size; multipleNum += primeNum) {
+            sieve[multipleNum] = false;
+        }
     }
 
     private int[] initPrimes() {
@@ -74,11 +79,6 @@ public class SieveOfEratosthenes implements PrimeGenerator {
         return count;
     }
 
-    private void setFalseToMultipleOfPrime(int i) {
-        for (int j = MINIMUM_PRIME_VALUE * i; j < size; j += i) {
-            sieve[j] = false;
-        }
-    }
 
     private boolean isPrimeNum(boolean sieve) {
         return sieve;
