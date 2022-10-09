@@ -1,11 +1,15 @@
 package ch14.draft2.marshaler;
 
-public class BooleanArgumentMarshaler extends ArgumentMarshaler {
+import ch14.draft2.ArgsException;
+
+import java.util.Iterator;
+
+public class BooleanArgumentMarshaler implements ArgumentMarshaler {
     private boolean booleanValue = false;
 
     @Override
-    public void set(String s) {
-        this.booleanValue = true;
+    public void set(Iterator<String> currentArgument) throws ArgsException {
+        booleanValue = true;
     }
 
     @Override

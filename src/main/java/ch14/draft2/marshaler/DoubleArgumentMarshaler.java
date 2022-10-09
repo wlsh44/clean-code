@@ -6,24 +6,24 @@ import ch14.draft2.ErrorCode;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class IntegerArgumentMarshaler implements ArgumentMarshaler {
-    private Integer integerValue;
+public class DoubleArgumentMarshaler implements ArgumentMarshaler {
+    private Double doubleValue;
 
     @Override
     public void set(Iterator<String> currentArgument) throws ArgsException {
         String parameter = null;
         try {
             parameter = currentArgument.next();
-            this.integerValue = Integer.parseInt(parameter);
+            this.doubleValue = Double.parseDouble(parameter);
         } catch (NoSuchElementException e) {
-            throw new ArgsException(ErrorCode.MISSING_INTEGER);
+            throw new ArgsException(ErrorCode.MISSING_DOUBLE);
         } catch (NumberFormatException e) {
-            throw new ArgsException(ErrorCode.INVALID_INTEGER, parameter);
+            throw new ArgsException(ErrorCode.INVALID_DOUBLE, parameter);
         }
     }
 
     @Override
     public Object get() {
-        return this.integerValue;
+        return this.doubleValue;
     }
 }
