@@ -1,4 +1,4 @@
-package ch14.draft1;
+package ch14.draft2;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-class ArgsTest {
+class ArgsDraft2Test {
 
     @Test
     void basicTest() {
@@ -42,6 +41,7 @@ class ArgsTest {
             Args arg = new Args("l,p#,d*", args);
             boolean valid = arg.isValid();
 
+            assertThat(arg.has('a')).isFalse();
             assertThat(valid).isFalse();
             assertThat(arg.errorMessage()).isEqualTo("Argument(s) -a unexpected.");
         } catch (ParseException e) {
