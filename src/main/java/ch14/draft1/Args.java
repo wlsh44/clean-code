@@ -58,7 +58,7 @@ public class Args {
     }
 
     private void parseElements(String arg) throws ArgsException {
-        for (int i = 0; i < arg.length(); i++) {
+        for (int i = 1; i < arg.length(); i++) {
             parseElement(arg.charAt(i));
         }
     }
@@ -107,7 +107,7 @@ public class Args {
     }
 
     private boolean isIntArg(char argChar) {
-        return booleanArgs.containsKey(argChar);
+        return intArgs.containsKey(argChar);
     }
 
     private void setStringArg(char argChar) throws ArgsException {
@@ -127,7 +127,7 @@ public class Args {
     }
 
     private void setBooleanArg(char argChar, boolean value) {
-        booleanArgs.put(argChar, true);
+        booleanArgs.put(argChar, value);
     }
 
     private boolean isBooleanArg(char argChar) {
@@ -260,7 +260,8 @@ public class Args {
         return valid;
     }
 
-    private class ArgsException extends Exception {
+    public class ArgsException extends Exception {
     }
+
 
 }
